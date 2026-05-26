@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OncoScan AI</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">Explainable medical imaging</p>
+        <h1>OncoScan AI</h1>
+        <p>
+          Upload a brain MRI or breast scan to receive a tumor risk prediction
+          with Grad-CAM heatmap evidence.
+        </p>
+      </section>
+
+      <section class="panel">
+        <form id="predict-form">
+          <label>
+            Scan type
+            <select name="scan_type" required>
+              <option value="brain">Brain MRI</option>
+              <option value="breast">Breast scan</option>
+            </select>
+          </label>
+
+          <label class="dropzone">
+            <span>Choose scan image</span>
+            <input name="image" type="file" accept="image/*" required />
+          </label>
+
+          <button type="submit">Analyze scan</button>
+        </form>
+
+        <div id="status" role="status"></div>
+      </section>
+
+      <section id="results" class="results hidden">
+        <div class="metric">
+          <span>Prediction</span>
+          <strong id="prediction"></strong>
+        </div>
+        <div class="metric">
+          <span>Confidence</span>
+          <strong id="confidence"></strong>
+        </div>
+        <div class="image-grid">
+          <figure>
+            <img id="heatmap" alt="Grad-CAM heatmap" />
+            <figcaption>Grad-CAM heatmap</figcaption>
+          </figure>
+          <figure>
+            <img id="overlay" alt="Grad-CAM overlay" />
+            <figcaption>Heatmap overlay</figcaption>
+          </figure>
+        </div>
+        <pre id="probabilities"></pre>
+        <p id="disclaimer" class="disclaimer"></p>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

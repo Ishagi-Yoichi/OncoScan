@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: oncoscan-api
+spec:
+  type: ClusterIP
+  selector:
+    app: oncoscan-api
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8000

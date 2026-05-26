@@ -1,0 +1,29 @@
+substitutions:
+  _REGION: us-central1
+  _REPOSITORY: oncoscan
+  _CLUSTER: oncoscan-gke
+  _ZONE: us-central1-a
+
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/oncoscan:$SHORT_SHA
+      - .
+
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/oncoscan:$SHORT_SHA
+
+  - name: gcr.io/cloud-builders/gke-deploy
+    args:
+      - run
+      - --filename=k8s
+      - --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/oncoscan:$SHORT_SHA
+      - --cluster=${_CLUSTER}
+      - --location=${_ZONE}
+
+images:
+  - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/oncoscan:$SHORT_SHA
