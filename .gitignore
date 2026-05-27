@@ -8,6 +8,7 @@ build/
 dist/
 wheels/
 *.egg-info
+ProjetcDescription.md
 
 # Virtual environments
 .venv
